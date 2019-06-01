@@ -20,3 +20,8 @@ class HitterAdminTest(TestCase):
             HitterAdmin
         )
 
+    def test_hitter_admin_should_set_list_display(self):
+        expected = (
+            'email',
+        )
+        self.assertEqual(HitterAdmin.list_display, expected)
