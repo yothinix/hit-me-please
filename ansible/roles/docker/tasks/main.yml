@@ -1,0 +1,11 @@
+- name: install docker
+  command: bash -c "curl -sS https://get.docker.com/ | sh"
+
+- name: change user permission
+  command: bash -c "sudo usermod -aG docker {{ username }}"
+
+- name: install docker compose
+  command: bash -c "sudo curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose"
+
+- name: change permission docker compose
+  command: bash -c "sudo chmod +x /usr/local/bin/docker-compose"
