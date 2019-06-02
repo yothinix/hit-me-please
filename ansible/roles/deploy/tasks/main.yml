@@ -1,0 +1,11 @@
+- name: upload docker compose file
+  copy:
+    src: "{{ project_path }}/docker-compose.yml"
+    dest: "docker-compose.yml"
+
+- name: pull docker image
+  command: "docker-compose pull"
+
+- name: start app
+  command: "docker-compose up -d"
+
