@@ -2,6 +2,7 @@ version: "3.7"
 
 services:
   app:
-    image: yothinix/hitme:v2
+    image: yothinix/hitme:live
+
     ports:
       - 80:8000
