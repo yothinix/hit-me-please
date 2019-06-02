@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/yothinix/hit-me-please.svg?style=svg)](https://circleci.com/gh/yothinix/hit-me-please)
 
+![](https://github.com/yothinix/hit-me-please/raw/master/IMG_20190602_145608-9668667f-2688-4664-86d4-5d2782f8bb9f.jpg)
+
 ## TL;DR
 
 ### Hit Me, Please!
