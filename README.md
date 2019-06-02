@@ -74,17 +74,18 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
 ## Cypress
 
 - เก็บไว้ใน folder tests
-
+```
     mkdir tests && cd tests
     yarn init
     yarn install --dev cypress
+```
 
 > Commit ควรจะมีแค่หนึ่งอย่าง ควรเป็นแค่ step เล็กๆ
 
 > Commit message ให้เริ่มด้วย Capitalize Verb
 
 - รัน cypress
-
+```
     # cli
     $ node_modules/.bin/cypress open
 
@@ -93,6 +94,7 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
     	"cypress": "cypress"
     }
     $ yarn cypress open
+```
 
 - Cypress ทำให้ high level ไว้ก่อน อะไรที่มันซับซ้อนก็แยกไปเป็น command
 - บางที่คิดว่า cy มันอ่านยากไปเลยใช้ const user = cy แทน
@@ -103,22 +105,23 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
 ## Django
 
 - สร้าง virtualenv ก่อน
-
+```
     $ python -m venv ENV
     $ source ENV/bin/activate
+```
 
 - Install Django
-
+```
     $ pip install django
     $ pip freeze > requirements.txt
-
+```
 - start Django project
-
+```
     $ python -m django startproject hit_me_please
     # กลับไปดูว่าทำไมตรงนี้พังในเครื่องเราใช้ django-admin startproject ไม่ได้
-
+```
 - Django project structure
-
+```
     $ tree -L 2 hit_me_please
     hit_me_please
     ├── hit_me_please
@@ -129,6 +132,7 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
     └── manage.py
 
     1 directory, 5 files
+```
 
 ก่อนจะเขียนโค้ดเรามาแบ่งฟีเจอร์เป็น Unit ย่อยๆ ก่อน เราทำได้หลายแบบเลือกอันไหนก่อนก็ได้
 
@@ -138,11 +142,12 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
 > Django app นึงมี model ไม่ควรมีเกิน 3 model เพราะ code มันจะ complex ลึกไป และชื่อ app ควรเป็นพหูพจน์
 
 - create app ไปทำที่ชั้น [manage.p](http://manage.py)y
-
+```
     $ python manage.py startapp hitters
+```
 
 - Django app structure
-
+```
     $ tree -L 2 hitters
     hitters
     ├── __init__.py
@@ -155,13 +160,15 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
     └── views.py
 
     1 directory, 7 files
+```
 
 ### Create Model
 
 - ทำ TDD เริ่มที่ tests.py
 - Test suites จะใช้ความสามารถของ TestCase ก็ extend มันออกมา
-
+```
     class HitterTest(TestCase):
+```
 
 - ทุก method ใน class ต้องมีตัวแปรไว้ represent ตัวมันเอง  Python ใช้คำว่า self
 
@@ -173,9 +180,10 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
 > เราไม่เขียนเทสไปเทส  Framework เราเขียนเทสเพื่อเทสโค้ดเรา
 
 - สิ่งที่เราจะทำคือ สร้าง model สร้าง migrations รัน migrate ให้สร้าง Table ใน database
-
+```
     $ python manage.py makemigrations
     $ python manage.py migrate
+```
 
 - เขียนเทส Admin ต้องเช็คก่อนว่า admin ของ model นี้มันถูก register แล้ว
 - ลำดับการ import ของ Python / Django
@@ -184,12 +192,14 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
     - 3rd Parties module
     - local apps
 - Runserver Django
-
+```
     $ python manage.py runserver
+```
 
 - ไม่ว่าจะสร้าง project ที่ไหน Production, dev, local เราต้องสร้าง admin ซักคน
-
+```
     $ python manage.py createsuperuser
+```
 
 > ถ้ามีโอกาสทำ Automate ตั้งแต่แรกให้ทำไปเลย เพราะถ้าทำทีหลังจะยากกว่าละ
 
@@ -211,81 +221,94 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
 
 - เวลาเราทำ docker เนี่ยเราจะ build application ขึ้นมาตัวนึงแล้วก็ Run
 - เราจะไม่ทำใหม่ทั้งหมด จะใช้ของที่ชาวบ้านทำไว้อยู่แล้ว Python:image
-
+```
     $ docker pull python:3.7-alpine
+```
 
 - บรรทัดแรกส่วนใหญ่จะบอกว่ามาจาก image ตัวไหน
-
+```
     FROM scratch # อันนี้คือถ้าไม่มี image แม่
     FROM python:3.7-alpine
+```
 
 - พอ build เสร็จเราต้องคิดเลยว่าเราจะมี Django ในนี้ได้ไง
 - Copy รับ 2 arguments
-
+```
     COPY <source-on-host> <destination-on-docker-image>
+```
 
 - ย้ายตัวเองไปอยู่ directory นั้นใน image
-
+```
     WORKDIR <directory>
+```
 
 - สั่ง run command ต่างๆ
-
+```
     RUN <command>
+```
 
 - คำสั่ง build
-
+```
     $ docker build -t hitme:v1 .
     # จะเลือก . คือ context ที่จะ build
+```
 
 - รัน application
-
+```
     CMD # override ได้โดยการพิมพ์คำสั่งตามหลังตอน run
         # e.g. docker run -p 8000:8000 hitme:v1 ls
     ENTRYPOINT # override ตรง entrypoint แบบใช้ --entrypoint ตอนรันแทน
 
     docker run -p 8000:8000 hitme:v1
+```
 
 - Dockerhub จะมี format มันอยู่ในชื่อ image เช่น yothinix/imagename:version Docker จะได้รู้ว่าจะวิ่งเข้าไปที่ไหน ถ้าของ AWS จะเป็นชื่อ Registry ยาวๆ
 - ถ้าจะ push เข้า Dockerhub ต้อง docker login ก่อน แล้วค่อย push ด้วยชื่อ image และ version
-
+```
     $ docker login
     $ docker push yothinix/hitme:v1
+```
 
 ## GCP — VM instance — Setting up Production instance
 
 - private key ที่ generate มากากๆ บางครั้งก็ใช้ไม่ได้
 - ลง docker  แบบง่ายๆ [https://get.docker.com/](https://get.docker.com/) มีแค่ 2 step
-
+```
     $ curl -fsSL https://get.docker.com -o get-docker.sh
     $ sh get-docker.sh
+```
 
 - รัน container บน production
-
+```
     $ docker run -p 80:8000 yothinix/hitme:v1
     # 80 คือเครื่อง 8000 คือ container
+```
 
 - Update  ALLOWED_HOST ใน Django แล้ว build / push ใหม่
-
+```
     # local
     docker build -t yothinix/hitme:v2 .
     docker push yothinix/hitme:v2
 
     # server
     docker run -p 80:8000 yothinix/hitme:v2
+```
 
 ## Docker compose instead of Docker run
 
 - ไม่อยากรันแล้ว สร้าง docker-compose file
 - ลง docker-compose ในเครื่อง production วิธีอยู่ที่ [https://github.com/docker/compose/releases](https://github.com/docker/compose/releases)
-
+```
     curl -L https://github.com/docker/compose/releases/download/1.25.0-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
+```
 
 - copy docker-compose file ไป production
 - ปกติบน production จะ make sure ก่อนว่ามี image ใช้
-
+```
     docker-compose pull
     docker-compose up
+```
 
 ## CircleCI
 
@@ -303,20 +326,22 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
 ### Terraform
 
 - ลงผ่าน brew ได้ง่ายๆ
-
+```
     brew install terraform
+```
 
 - Command ที่ใช้บ่อย
-
+```
     terraform init # ใช้แค่ครั้งแรก
     terraform plan # คล้ายๆ dry run
     terraform apply # เอา config เราไปรันใน cloud provider
     terraform destroy # ตามนั้น
+```
 
 สร้าง folder terraform ไว้ใน project
 
 - ก่อนจะรัน terraform init ต้องมีไฟล์ main[.tf](http://terraform.tf) ก่อน
-
+```
     $ terraform init
 
     Initializing the backend...
@@ -330,19 +355,21 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
     If you ever set or change modules or backend configuration for Terraform,
     rerun this command to reinitialize your working directory. If you forget, other
     commands will detect it and remind you to do so if necessary.
+```
 
 - Documents [https://www.terraform.io/docs/index.html](https://www.terraform.io/docs/index.html) บางคำสั่งจะซ้ำกันต้องดู section
     - Provider เราใช้ที่ไหนก็ดูที่นั่น
     - เวลาสร้างเราจะดูใน Compute Engine เป็นหลัก ไม่ดู Data Source
     - Data Source เอาไว้ get information ต่างๆ
 - Step แรกคือต้อง set provider ให้ terraform ก่อน
-
+```
     provider "google" {
       credentials = "${file("account.json")}"
       project     = "my-project-id" # อันนี้ไปดูได้ที่ GCP Home -> Project Info -> Project ID
       region      = "asia-southeast1"
       zone        = "asia-southeast1-b"
     }
+```
 
 - ${file()} จะอ่าน content ของไฟล์
 - สร้าง Credential ใน GCP
@@ -355,7 +382,7 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
 - Autocomplete zsh [https://github.com/hashicorp/terraform/tree/master/contrib/zsh-completion](https://github.com/hashicorp/terraform/tree/master/contrib/zsh-completion)
 - เราจะเก็บแค่ [main.tf](http://main.tf) ส่วนพวก terraform.tfstate จะแชร์ไฟล์เก็บไว้ซักที่
 - Configuration for create instance มีตัวอย่างอยู่ที่ [https://www.terraform.io/docs/providers/google/r/compute_instance.html#network_interface](https://www.terraform.io/docs/providers/google/r/compute_instance.html#network_interface)
-
+```
     resource "google_compute_instance" "tf_instance" {
       name         = "tf-instance"
       machine_type = "n1-standard-1"
@@ -378,13 +405,14 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
 
       tags = ["my-web"]
     }
+```
 
 - ลง gcloud command line SDK [https://cloud.google.com/sdk/docs/#install_the_latest_cloud_tools_version_cloudsdk_current_version](https://cloud.google.com/sdk/docs/#install_the_latest_cloud_tools_version_cloudsdk_current_version)
     - โหลดมาแล้วแตก zip แล้วเอาไปไว้ที่ home
     - รัน `./google-cloud-sdk/install.sh`
     - รัน `./google-cloud-sdk/bin/gcloud init`
 - วิธีดูชนิดเครื่อง
-
+```
     $ gcloud compute machine-types list | grep asia-southeast1-b
     n1-standard-1    asia-southeast1-b          1     3.75
     n1-standard-16   asia-southeast1-b          16    60.00
@@ -397,11 +425,12 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
     n1-ultramem-160  asia-southeast1-b          160   3844.00
     n1-ultramem-40   asia-southeast1-b          40    961.00
     n1-ultramem-80   asia-southeast1-b          80    1922.00
+```
 
  แล้วก็จะ search หาเครื่องจาก zone ได้เช่น `asia-southeast1-b` จะได้ machine type เป็นโค้ดเช่น `n1-standard-1`
 
 - วิธีหา boot disk
-
+```
     $ gcloud compute images list | grep ubuntu
     ubuntu-1404-trusty-v20190514                          ubuntu-os-cloud    ubuntu-1404-lts                               READY
     ubuntu-1604-xenial-v20190530c                         ubuntu-os-cloud    ubuntu-1604-lts                               READY
@@ -412,33 +441,39 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
     ubuntu-minimal-1804-bionic-v20190529                  ubuntu-os-cloud    ubuntu-minimal-1804-lts                       READY
     ubuntu-minimal-1810-cosmic-v20190529a                 ubuntu-os-cloud    ubuntu-minimal-1810                           READY
     ubuntu-minimal-1904-disco-v20190528                   ubuntu-os-cloud    ubuntu-minimal-1904                           READY
+```
 
 เราก็เลือก `ubuntu-1804-bionic-v20190530`
 
 - verify config ว่าถูกรึเปล่า
-
+```
     $ terraform plan
+```
 
 - เอา config  ไปสร้างเครื่องจริงๆ ผ่าน
-
+```
     $ terraform apply
+```
 
 - ถ้าอยากได้ value อะไรก็ตามตอนสร้าง instance เสร็จ เช่นเอาไปใช้กับ Ansible ต่อ เช่น External IP
-
+```
     output "ip" {
       value = "${google_compute_instance.tf_instance.network_interface.0.access_config.0.nat_ip}"
     }
+```
 
 - ลบเครื่องออกจาก known host
-
+```
     ssh-keygen -R <HOST>
+```
 
 - `คำเตือน`: ถ้าจะ ssh เข้าเครื่องโดยไม่ใช่ key default (id_rsa) ต้องบอก ssh ว่าจะใช้ key ไหนด้วย
-
+```
     ssh -i ~/.ssh/hitme hitme@<HOST>
+```
 
 - สร้าง terraform มากกว่า 1 เครื่องกับ config เดิมให้เพิ่ม count เข้าไป แต่ถ้ามี output ให้เพิ่ม .*.
-
+```
     # เพิ่ม count 3 แปลว่าสร้าง 3 เครื่อง
     resource "google_compute_instance" "tf_instance" {
       name         = "tf-instance-${count.index}"
@@ -449,6 +484,7 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
     output "ip" {
       value = "${google_compute_instance.tf_instance.*.network_interface.0.access_config.0.nat_ip}"
     }
+```
 
 ### Ansible
 
@@ -459,95 +495,108 @@ Ri — เรามี Knowledge ของเรา สามารถประ�
     - Inventory — Role of Server e.g. Web
     - group_vars — จะอ่านไฟล์ชื่อ all หรือตาม inventory name
 - สร้าง folder ansible | สร้าง virtualenv แล้วลง ansible ผ่าน
-
+```
     pip install ansible
+```
 
 - เทส ansible ใช้ได้ ต่อเครื่องตัวเองได้
-
+```
     ansible localhost -a ls
+```
 
 - สร้าง inventory — สร้างไฟล์ ansible/hosts เสร็จแล้วเพิ่ม Inventory
-
+```
     [web]
     12.34.56.78 ansible_python_interpreter=/usr/bin/python3 ansible_ssh_user=hitme ansible_ssh_private_key_file=~/.ssh/hitme
+```
 
 บางครั้งเครื่องปลายทางไม่ได้ลง Python3 ไว้ก็ต้องบอกให้ ansible รู้ด้วย
 
 ต้องบอกคีย์ที่เราจะใช้เข้าเครื่องด้วยด้วย
 
 - เทส Inventory ว่าเวิร์คแล้ว
-
+```
     ansible -i hosts web -a ls
+```
 
 - แต่ถ้าเอา config ไปเก็บไว้ใน inventory มันก็จะรกมากๆ ก็เลยเอาพวก config พวกนี้ไปเก็บไว้ใน group_vars
-
+```
     # ansible/group_vars/all
     ansible_python_interpreter: /usr/bin/python3
     ansible_ssh_user: hitme
     ansible_ssh_private_key_file: ~/.ssh/hitme
+```
 
 - สร้าง Playbook
-
+```
     # ansible/provision.yml
 
     name: set up web server
       hosts: web
       roles:
         - docker
+```
 
 หมายความว่าจะ setup webserver ขึ้นมาที่ host web และให้ทำ role common กับ docker
 
 - สร้าง Role
-
+```
     $ tree -L 3
     .
     └── roles
         └── docker
             └── tasks
                 └── main.yml
+```
 
 หน้าตาของ tasks ก็จะประมาณนี้
-
+```
     - name: list directories and files
       command: "ls"
+```
 
 - รัน playbook
-
+```
     $ ansible-playbook -v -i hosts provision.yml
+```
 
 - Ansible มี module ไว้ช่วยให้เราทำงานสะดวกๆ เช่น apt, service
 
 > ถ้าใช้โมดูลได้ให้ใช้โมดูล แต่ถ้าใช้โมดูลไม่เป็น ให้ใช้ command ก็ได้
 
 - รัน ansible-playbook แบบ custom extra-vars
-
+```
     $ ansible-playbook -v -i hosts deploy.yml --extra-vars "project_path=/Users/man/projects/_class/hit-me-please username=hitme"
+```
 
 ## Integrate Ansible with CircleCI
 
 - ถ้าจะทำให้ circle CI build docker ได้ต้องใส่ setup_remote_docker จะทำให้เราใช้ docker build image ได้ด้วย
-
+```
     steps:
       - setup_remote_docker
+```
 
 - เพิ่ม build docker image step ให้กับ circleCI
-
+```
     - run:
         name: build & push image
         command: |
           docker build -t yothinix/hitme:live .
           docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
           docker push yothinix/hitme:live
+```
 
 ต้องไปแก้ Environment Variable ที่ CircleCI ด้วย เข้าไปตรง Project Settings → Build Settings → Environment Variable จากนั้นเพิ่ม Add Value
 
 - Step deploy ใน circleci.yml
-
+```
     - run:
         name: deploy
         command: |
           cd ansible
           ansible-playbook -v -i hosts deploy.yml --extra-vars "project_path=~/hitme username=circleci"
+```
 
 ต้องไปเพิ่ม SSH Permissions แล้ว Add SSH Key แล้วเอา Private Key มาแปะไว้ที่นี่ (Key ที่เอามาแปะบบน circleCI นี้ต้อง generate ใน Linux อันที่ generate  บน mac os ไม่เวิร์ค)
 
