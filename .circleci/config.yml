@@ -29,8 +29,8 @@ jobs:
           fingerprints:
             - "78:ed:c5:52:18:a3:ab:b0:f7:d7:3c:44:67:7f:20:21"
       - run:
-        name: deploy
-        command: |
-          . ENV/bin/activate
-          cd ansible
-          ansible-playbook -i hosts deploy.yml --extra-vars "project_path=~/hitme"
+          name: deploy
+          command: |
+            . ENV/bin/activate
+            cd ansible
+            ansible-playbook -i hosts deploy.yml --extra-vars "project_path=~/hitme"
