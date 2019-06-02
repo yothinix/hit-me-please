@@ -18,7 +18,7 @@ resource "google_compute_instance" "tf_instance" {
   }
 
   metadata = {
-    sshKeys = "hitme:${file("~/.ssh/hitme.pub")}"
+    sshKeys = "circleci:${file("~/.ssh/circleci.pub")}"
   }
 
   network_interface {
