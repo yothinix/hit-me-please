@@ -2,4 +2,7 @@ node_modules
 ENV
 db.sqlite3
 **/__pycache__/**
+*.tfstate*
+.terraform
+hitmebaby.json
 
