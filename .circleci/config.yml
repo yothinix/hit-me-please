@@ -13,6 +13,7 @@ jobs:
             python3 -m venv ENV
             . ENV/bin/activate
             pip install -r requirements.txt
+            pip install ansible
       - run:
           name: run unit tests
           command: |
@@ -24,3 +25,11 @@ jobs:
             docker build -t yothinix/hitme:live .
             docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
             docker push yothinix/hitme:live
+      - add_ssh_keys:
+        fingerprint: |
+          78:ed:c5:52:18:a3:ab:b0:f7:d7:3c:44:67:7f:20:21
+      - run:
+        name: deploy
+        command: |
+          cd ansible
+          ansible-playbook -v -i hosts deploy.yml --extra-vars "project_path=~/hitme username=circleci"
